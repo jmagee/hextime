@@ -1,12 +1,19 @@
 cc=cc
 cflags=-O2 -Wall -Wextra
 
-all: hextime
+all: hextime ctime
 
 hextime: hextime.c
 	$(cc) $(cflags) $< -o $@
 
+ctime:
+	@echo "#include <stdio.h>" > ctime.c
+	@echo "#include <time.h>" >> ctime.c 
+	@echo "int main(int argc, char *argv[printf(\"%ld\n\", time(NULL))]) { return 0; }" >> ctime.c
+	@$(cc) $(cflags) -Wno-unused-parameter ctime.c -o $@
+	@rm ctime.c
+
 .PHONY: clean
 
 clean:
-	rm -fv hextime
+	rm -fv hextime ctime
